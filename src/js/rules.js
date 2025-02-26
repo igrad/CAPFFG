@@ -1172,6 +1172,56 @@ const RuleAlignTableGenDefinitionColons = {
   ]
 }
 
+const RuleAlignEscapedNewlines = {
+  version: 5,
+  title: 'Align Escaped Newlines',
+  desc: 'Options for aligning backslashes in escaped newlines.',
+  options: [
+    {
+      title: 'ENAS_DontAlign',
+      config: 'DontAlign',
+      desc: 'Don\'t align escaped newlines.',
+      codeSnippet:
+        '#define A \\\n' +
+        '  int aaaa; \\\n' +
+        '  int b; \\\n' +
+        '  int ddddddddddd;'
+    },
+    {
+      title: 'ENAS_Left',
+      config: 'Left',
+      desc: 'Align escaped newlines as far left as possible.',
+      codeSnippet:
+        '#define A   \\\n' +
+        '  int aaaa; \\\n' +
+        '  int b;    \\\n' +
+        '  int ddddddddddd;'
+    },
+    {
+      title: 'ENAS_LeftWithLastLine',
+      config: 'LeftWithLastLine',
+      desc: 'Align escaped newlines as far left as possible, using the last ' +
+        'line of the preprocessor directive as the reference if it\n the ' +
+        'longest.',
+      codeSnippet:
+        '#define A          \\\n' +
+        '  int aaaa;        \\\n' +
+        '  int b;           \\\n' +
+        '  int ddddddddddd;'
+    },
+    {
+      title: 'ENAS_Right',
+      config: 'Right',
+      desc: 'Align escaped newlines in the right-most column.',
+      codeSnippet:
+        '#define A                                           \\\n' +
+        '  int aaaa;                                         \\\n' +
+        '  int b;                                            \\\n' +
+        '  int ddddddddddd;'
+    }
+  ]
+}
+
 const Rule = {
   version: 0,
   type: null,
