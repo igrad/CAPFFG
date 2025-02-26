@@ -7,7 +7,6 @@ const RuleAccessModifierOffset = {
 
 const RuleAlignAfterOpenBracket = {
   version: 3.8,
-  type: typeof (object),
   title: 'Align After Open Bracket',
   desc: 'If true, horizontally aligns arguments after an open bracket.' +
     'This applies to round brackets (parentheses), angle brackets, and square ' +
@@ -55,7 +54,6 @@ const RuleAlignAfterOpenBracket = {
 
 const RuleAlignArrayOfStructures = {
   version: 13,
-  type: null,
   title: 'Align Array of Structures',
   desc: 'If not `None`, when using initialization for an array of structs ' +
     'align the fields into columns.',
@@ -99,9 +97,8 @@ const RuleAlignConsecutiveAssignments = {
   type: null,
   title: 'Align Consecutive Assignments',
   desc: 'Style of aligning consecutive assignments.',
-  subOptions: [
+  subRules: [
     {
-      type: typeof (bool),
       title: 'Enabled',
       desc: 'Whether aligning is enabled.',
       codeSnippet:
@@ -125,86 +122,117 @@ const RuleAlignConsecutiveAssignments = {
       options: [
         {
           title: 'true',
-          desc: '',
-          codeSnippet:
-            ''
+          desc: 'Consecutive Assignment Aligment is enabled'
+        },
+        {
+          title: 'false',
+          desc: 'Consecutive Assignment Aligment is disabled'
         }
       ]
     },
     {
       type: typeof (bool),
-      title: '',
-      desc: '',
+      title: 'AcrossEmptyLines',
+      desc: 'Whether to align across empty lines',
       codeSnippet:
-        '',
-      options: [
-        {
-          title: 'true',
-          desc: '',
-          codeSnippet:
-            ''
-        }
-      ]
+        'true:\n' +
+        'int a = 1\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d            = 3;\n' +
+        '\n' +
+        'false:\n' +
+        'int a            = 1;\n' +
+        'int somelongbane = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d = 3;\n'
     },
     {
       type: typeof (bool),
-      title: '',
-      desc: '',
+      title: 'AcrossComments',
+      desc: 'Whether to align across comments',
       codeSnippet:
-        '',
-      options: [
-        {
-          title: 'true',
-          desc: '',
-          codeSnippet:
-            ''
-        }
-      ]
+        'true:\n' +
+        'int d    = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n' +
+        '\n' +
+        'false:\n' +
+        'int d = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n'
     },
     {
       type: typeof (bool),
-      title: '',
-      desc: '',
+      title: 'AlignCompound',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether compound ' +
+        'assignments like `+=` are aligned along with `=`.',
       codeSnippet:
-        '',
-      options: [
-        {
-          title: 'true',
-          desc: '',
-          codeSnippet:
-            ''
-        }
-      ]
+        'true:\n' +
+        'a   &= 2;\n' +
+        'bbb  = 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a &= 2;\n' +
+        'bbb = 2;'
     },
     {
       type: typeof (bool),
-      title: '',
-      desc: '',
+      title: 'AlignFunctionDeclarations',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'declarations are aligned.',
       codeSnippet:
-        '',
-      options: [
-        {
-          title: 'true',
-          desc: '',
-          codeSnippet:
-            ''
-        }
-      ]
+        'true:\n' +
+        'unsigned int f1(void);\n' +
+        'void         f2(void);\n' +
+        'size_t       f3(void);\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned int f1(void);\n' +
+        'void f2(void);\n' +
+        'size_t f3(void);'
     },
     {
       type: typeof (bool),
-      title: '',
-      desc: '',
+      title: 'AlignFunctionPointers',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'pointers are aligned.',
       codeSnippet:
-        '',
-      options: [
-        {
-          title: 'true',
-          desc: '',
-          codeSnippet:
-            ''
-        }
-      ]
+        'true:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int      (*f)();\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int (*f)();'
+    },
+    {
+      type: typeof (bool),
+      title: 'PadOperators',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether short ' +
+        'assignment operators are left-padded to the same length as long ' +
+        'ones in order to put all assignment operators to the right of the ' +
+        'left hand side.',
+      codeSnippet:
+        'true:\n' +
+        'a   >>= 2;\n' +
+        'bbb   = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a >>= 2;\n' +
+        'bbb = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;'
     }
   ]
 }
@@ -215,7 +243,7 @@ const Rule = {
   title: '',
   desc: '',
   note: '',
-  subOptions: [
+  subRules: [
     {
       type: null,
       title: '',
@@ -235,6 +263,7 @@ const Rule = {
   ],
   options: [
     {
+      type: null,
       title: '',
       config: '',
       desc: '',
