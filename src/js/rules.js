@@ -119,16 +119,6 @@ const RuleAlignConsecutiveAssignments = {
         'int         aaaa = 12;\n' +
         'float       b = 23;\n' +
         'std::string ccc;',
-      options: [
-        {
-          title: 'true',
-          desc: 'Consecutive Assignment Aligment is enabled'
-        },
-        {
-          title: 'false',
-          desc: 'Consecutive Assignment Aligment is disabled'
-        }
-      ]
     },
     {
       type: typeof (bool),
@@ -137,6 +127,951 @@ const RuleAlignConsecutiveAssignments = {
       codeSnippet:
         'true:\n' +
         'int a = 1\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d            = 3;\n' +
+        '\n' +
+        'false:\n' +
+        'int a            = 1;\n' +
+        'int somelongbane = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d = 3;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossComments',
+      desc: 'Whether to align across comments',
+      codeSnippet:
+        'true:\n' +
+        'int d    = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n' +
+        '\n' +
+        'false:\n' +
+        'int d = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignCompound',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether compound ' +
+        'assignments like `+=` are aligned along with `=`.',
+      codeSnippet:
+        'true:\n' +
+        'a   &= 2;\n' +
+        'bbb  = 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a &= 2;\n' +
+        'bbb = 2;'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionDeclarations',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'declarations are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned int f1(void);\n' +
+        'void         f2(void);\n' +
+        'size_t       f3(void);\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned int f1(void);\n' +
+        'void f2(void);\n' +
+        'size_t f3(void);'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionPointers',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'pointers are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int      (*f)();\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int (*f)();'
+    },
+    {
+      type: typeof (bool),
+      title: 'PadOperators',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether short ' +
+        'assignment operators are left-padded to the same length as long ' +
+        'ones in order to put all assignment operators to the right of the ' +
+        'left hand side.',
+      codeSnippet:
+        'true:\n' +
+        'a   >>= 2;\n' +
+        'bbb   = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a >>= 2;\n' +
+        'bbb = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;'
+    }
+  ]
+}
+
+const RuleAlignConsecutiveBitFields = {
+  version: 11,
+  type: null,
+  title: 'Align Consecutive Bit Fields',
+  desc: 'Style of aligning consecutive bit fields.',
+  note: '',
+  subRules: [
+    {
+      title: 'Enabled',
+      desc: 'Whether aligning is enabled.',
+      codeSnippet:
+        '#define SHORT_NAME       42\n' +
+        '#define LONGER_NAME      0x007F\n' +
+        '#define EVEN_LONGER_NAME (2)\n' +
+        '#define foo(x)           (x * x)\n' +
+        '#define bar(y, z)        (y + z)\n' +
+        '\n' +
+        'int a            = 1;\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int aaaa : 1;\n' +
+        'int b    : 12;\n' +
+        'int ccc  : 8;\n' +
+        '\n' +
+        'int         aaaa = 12;\n' +
+        'float       b = 23;\n' +
+        'std::string ccc;',
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossEmptyLines',
+      desc: 'Whether to align across empty lines',
+      codeSnippet:
+        'true:\n' +
+        'int a = 1\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d            = 3;\n' +
+        '\n' +
+        'false:\n' +
+        'int a            = 1;\n' +
+        'int somelongbane = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d = 3;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossComments',
+      desc: 'Whether to align across comments',
+      codeSnippet:
+        'true:\n' +
+        'int d    = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n' +
+        '\n' +
+        'false:\n' +
+        'int d = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignCompound',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether compound ' +
+        'assignments like `+=` are aligned along with `=`.',
+      codeSnippet:
+        'true:\n' +
+        'a   &= 2;\n' +
+        'bbb  = 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a &= 2;\n' +
+        'bbb = 2;'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionDeclarations',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'declarations are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned int f1(void);\n' +
+        'void         f2(void);\n' +
+        'size_t       f3(void);\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned int f1(void);\n' +
+        'void f2(void);\n' +
+        'size_t f3(void);'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionPointers',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'pointers are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int      (*f)();\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int (*f)();'
+    },
+    {
+      type: typeof (bool),
+      title: 'PadOperators',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether short ' +
+        'assignment operators are left-padded to the same length as long ' +
+        'ones in order to put all assignment operators to the right of the ' +
+        'left hand side.',
+      codeSnippet:
+        'true:\n' +
+        'a   >>= 2;\n' +
+        'bbb   = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a >>= 2;\n' +
+        'bbb = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;'
+    }
+  ]
+}
+
+const RuleAlignDeclarations = {
+  version: 3.8,
+  type: null,
+  title: 'Align Consecutive Declarations',
+  desc: 'Style of aligning consecutive declarations.',
+  note: '',
+  subRules: [
+    {
+      title: 'Enabled',
+      desc: 'Whether aligning is enabled.',
+      codeSnippet:
+        '#define SHORT_NAME       42\n' +
+        '#define LONGER_NAME      0x007F\n' +
+        '#define EVEN_LONGER_NAME (2)\n' +
+        '#define foo(x)           (x * x)\n' +
+        '#define bar(y, z)        (y + z)\n' +
+        '\n' +
+        'int a            = 1;\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int aaaa : 1;\n' +
+        'int b    : 12;\n' +
+        'int ccc  : 8;\n' +
+        '\n' +
+        'int         aaaa = 12;\n' +
+        'float       b = 23;\n' +
+        'std::string ccc;',
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossEmptyLines',
+      desc: 'Whether to align across empty lines',
+      codeSnippet:
+        'true:\n' +
+        'int a = 1\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d            = 3;\n' +
+        '\n' +
+        'false:\n' +
+        'int a            = 1;\n' +
+        'int somelongbane = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d = 3;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossComments',
+      desc: 'Whether to align across comments',
+      codeSnippet:
+        'true:\n' +
+        'int d    = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n' +
+        '\n' +
+        'false:\n' +
+        'int d = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignCompound',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether compound ' +
+        'assignments like `+=` are aligned along with `=`.',
+      codeSnippet:
+        'true:\n' +
+        'a   &= 2;\n' +
+        'bbb  = 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a &= 2;\n' +
+        'bbb = 2;'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionDeclarations',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'declarations are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned int f1(void);\n' +
+        'void         f2(void);\n' +
+        'size_t       f3(void);\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned int f1(void);\n' +
+        'void f2(void);\n' +
+        'size_t f3(void);'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionPointers',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'pointers are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int      (*f)();\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int (*f)();'
+    },
+    {
+      type: typeof (bool),
+      title: 'PadOperators',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether short ' +
+        'assignment operators are left-padded to the same length as long ' +
+        'ones in order to put all assignment operators to the right of the ' +
+        'left hand side.',
+      codeSnippet:
+        'true:\n' +
+        'a   >>= 2;\n' +
+        'bbb   = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a >>= 2;\n' +
+        'bbb = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;'
+    }
+  ]
+}
+
+const RuleAlignConsecutiveMacros = {
+  version: 9,
+  type: null,
+  title: 'Align Consecutive Macros',
+  desc: 'Style of aligning consecutive macro definitions.',
+  note: '',
+  subRules: [
+    {
+      title: 'Enabled',
+      desc: 'Whether aligning is enabled.',
+      codeSnippet:
+        '#define SHORT_NAME       42\n' +
+        '#define LONGER_NAME      0x007F\n' +
+        '#define EVEN_LONGER_NAME (2)\n' +
+        '#define foo(x)           (x * x)\n' +
+        '#define bar(y, z)        (y + z)\n' +
+        '\n' +
+        'int a            = 1;\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int aaaa : 1;\n' +
+        'int b    : 12;\n' +
+        'int ccc  : 8;\n' +
+        '\n' +
+        'int         aaaa = 12;\n' +
+        'float       b = 23;\n' +
+        'std::string ccc;',
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossEmptyLines',
+      desc: 'Whether to align across empty lines',
+      codeSnippet:
+        'true:\n' +
+        'int a = 1\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d            = 3;\n' +
+        '\n' +
+        'false:\n' +
+        'int a            = 1;\n' +
+        'int somelongbane = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d = 3;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossComments',
+      desc: 'Whether to align across comments',
+      codeSnippet:
+        'true:\n' +
+        'int d    = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n' +
+        '\n' +
+        'false:\n' +
+        'int d = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignCompound',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether compound ' +
+        'assignments like `+=` are aligned along with `=`.',
+      codeSnippet:
+        'true:\n' +
+        'a   &= 2;\n' +
+        'bbb  = 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a &= 2;\n' +
+        'bbb = 2;'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionDeclarations',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'declarations are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned int f1(void);\n' +
+        'void         f2(void);\n' +
+        'size_t       f3(void);\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned int f1(void);\n' +
+        'void f2(void);\n' +
+        'size_t f3(void);'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionPointers',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'pointers are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int      (*f)();\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int (*f)();'
+    },
+    {
+      type: typeof (bool),
+      title: 'PadOperators',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether short ' +
+        'assignment operators are left-padded to the same length as long ' +
+        'ones in order to put all assignment operators to the right of the ' +
+        'left hand side.',
+      codeSnippet:
+        'true:\n' +
+        'a   >>= 2;\n' +
+        'bbb   = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a >>= 2;\n' +
+        'bbb = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;'
+    }
+  ]
+}
+
+const RuleAlignConsecutiveShortCaseStatements = {
+  version: 17,
+  type: null,
+  title: 'Align Consecutive Short Case Statements',
+  desc: 'Style of aligning consecutive short case labels. Only applies if ' +
+    '`AllowShortCaseExpressionOnASingleLine` or ' +
+    '`AllowShortCaseLabelsOnASingleLine` is `true`.',
+  note: '',
+  subRules: [
+    {
+      title: 'Enabled',
+      desc: 'Whether aligning is enabled.',
+      codeSnippet:
+        'true:\n' +
+        'switch (level) {\n' +
+        'case log::info:    return "info:";\n' +
+        'case log::warning: return "warning:";\n' +
+        'default:           return "";\n' +
+        '\n' +
+        'false:\n' +
+        'switch (level) {\n' +
+        'case log::info: return "info:";\n' +
+        'case log::warning: return "warning:";\n' +
+        'default: return "";'
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossEmptyLines',
+      desc: 'Whether to align across empty lines',
+      codeSnippet:
+        'true:\n' +
+        'switch (level) {\n' +
+        'case log::info:    return "info:";\n' +
+        'case log::warning: return "warning:";\n' +
+        '\n' +
+        'default:           return "";\n' +
+        '\n' +
+        'false:\n' +
+        'switch (level) {\n' +
+        'case log::info:    return "info:";\n' +
+        'case log::warning: return "warning:";\n' +
+        '\n' +
+        'default: return "";'
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossComments',
+      desc: 'Whether to align across comments',
+      codeSnippet:
+        'true:\n' +
+        'switch (level) {\n' +
+        'case log::info:    return "info:";\n' +
+        'case log::warning: return "warning:";\n' +
+        '/* A comment. */\n' +
+        'default:           return "";\n' +
+        '\n' +
+        'false:\n' +
+        'switch (level) {\n' +
+        'case log::info:    return "info:";\n' +
+        'case log::warning: return "warning:";\n' +
+        '/* A comment. */\n' +
+        'default: return "";'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignCaseArrows',
+      desc: 'Whether to align the case arrows when aligning short case ' +
+        'expressions.',
+      codeSnippet:
+        'true:\n' +
+        'i = switch (day) {\n' +
+        '  case THURSDAY, SATURDAY -> 8;\n' +
+        '  case WEDNESDAY          -> 9;\n' +
+        '  default                 -> 0;\n' +
+        '\n' +
+        'false:\n' +
+        'i = switch (day) {\n' +
+        '  case THURSDAY, SATURDAY -> 8;\n' +
+        '  case WEDNESDAY -> 9;\n' +
+        '  default -> 0;',
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignCaseColons',
+      desc: 'Whether aligned case labels are aligned on the colon, or on the ' +
+        'tokens after the colon.',
+      codeSnippet:
+        'true:\n' +
+        'switch (level) {\n' +
+        'case log::info   : return "info:";\n' +
+        'case log::warning: return "warning:";\n' +
+        'default          : return "";\n' +
+        '}\n' +
+        '\n' +
+        'false:\n' +
+        'switch (level) {\n' +
+        'case log::info:    return "info:";\n' +
+        'case log::warning: return "warning:";\n' +
+        'default:           return "";\n' +
+        '}',
+    }
+  ]
+}
+
+const RuleAlignTableGenBreakingDAGArgColons = {
+  version: 19,
+  type: null,
+  title: 'Align Consecutive Table Gen Breaking DAG Arg Colons',
+  desc: 'Style of aligning consecutive TableGen DAGArg operator colons. If ' +
+    'enabled, align the colon inside DAGArg which have line break inside.  ' +
+    'This works only when TableHenBreakInsideDAGArg is BreakElements or ' +
+    'BreakAll and the DAGArg is not excepted by ' +
+    'TableGenBreakingDAGArgOperators\'s effect.',
+  codeSnippet:
+    'let dagarg = (ins\n' +
+    '    a  :$src1,\n' +
+    '    aa :$src2,\n' +
+    '    aaa:$src3\n' +
+    ')',
+  subRules: [
+    {
+      title: 'Enabled',
+      desc: 'Whether aligning is enabled.',
+      codeSnippet:
+        '#define SHORT_NAME       42\n' +
+        '#define LONGER_NAME      0x007F\n' +
+        '#define EVEN_LONGER_NAME (2)\n' +
+        '#define foo(x)           (x * x)\n' +
+        '#define bar(y, z)        (y + z)\n' +
+        '\n' +
+        'int a            = 1;\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int aaaa : 1;\n' +
+        'int b    : 12;\n' +
+        'int ccc  : 8;\n' +
+        '\n' +
+        'int         aaaa = 12;\n' +
+        'float       b = 23;\n' +
+        'std::string ccc;',
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossEmptyLines',
+      desc: 'Whether to align across empty lines',
+      codeSnippet:
+        'true:\n' +
+        'int a            = 1\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d            = 3;\n' +
+        '\n' +
+        'false:\n' +
+        'int a            = 1;\n' +
+        'int somelongbane = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d = 3;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossComments',
+      desc: 'Whether to align across comments',
+      codeSnippet:
+        'true:\n' +
+        'int d    = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n' +
+        '\n' +
+        'false:\n' +
+        'int d = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignCompound',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether compound ' +
+        'assignments like `+=` are aligned along with `=`.',
+      codeSnippet:
+        'true:\n' +
+        'a   &= 2;\n' +
+        'bbb  = 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a &= 2;\n' +
+        'bbb = 2;'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionDeclarations',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'declarations are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned int f1(void);\n' +
+        'void         f2(void);\n' +
+        'size_t       f3(void);\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned int f1(void);\n' +
+        'void f2(void);\n' +
+        'size_t f3(void);'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionPointers',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'pointers are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int      (*f)();\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int (*f)();'
+    },
+    {
+      type: typeof (bool),
+      title: 'PadOperators',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether short ' +
+        'assignment operators are left-padded to the same length as long ' +
+        'ones in order to put all assignment operators to the right of the ' +
+        'left hand side.',
+      codeSnippet:
+        'true:\n' +
+        'a   >>= 2;\n' +
+        'bbb   = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a >>= 2;\n' +
+        'bbb = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;'
+    }
+  ]
+}
+
+const RuleAlignTableGenCondOperatorColons = {
+  version: 19,
+  type: null,
+  title: 'Align Consecutive Table Gen Breaking DAG Arg Colons',
+  desc: 'Style of aligning consecutive TableGen DAGArg operator colons. If ' +
+    'enabled, align the colon inside DAGArg which have line break inside.  ' +
+    'This works only when TableHenBreakInsideDAGArg is BreakElements or ' +
+    'BreakAll and the DAGArg is not excepted by ' +
+    'TableGenBreakingDAGArgOperators\'s effect.',
+  codeSnippet:
+    '!cond(!eq(size, 1) : 1,\n' +
+    '      !eq(size, 16): 1,\n' +
+    '      true         : 0)',
+  note: '',
+  subRules: [
+    {
+      title: 'Enabled',
+      desc: 'Whether aligning is enabled.',
+      codeSnippet:
+        '#define SHORT_NAME       42\n' +
+        '#define LONGER_NAME      0x007F\n' +
+        '#define EVEN_LONGER_NAME (2)\n' +
+        '#define foo(x)           (x * x)\n' +
+        '#define bar(y, z)        (y + z)\n' +
+        '\n' +
+        'int a            = 1;\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int aaaa : 1;\n' +
+        'int b    : 12;\n' +
+        'int ccc  : 8;\n' +
+        '\n' +
+        'int         aaaa = 12;\n' +
+        'float       b = 23;\n' +
+        'std::string ccc;',
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossEmptyLines',
+      desc: 'Whether to align across empty lines',
+      codeSnippet:
+        'true:\n' +
+        'int a            = 1\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d            = 3;\n' +
+        '\n' +
+        'false:\n' +
+        'int a            = 1;\n' +
+        'int somelongbane = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int d = 3;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossComments',
+      desc: 'Whether to align across comments',
+      codeSnippet:
+        'true:\n' +
+        'int d    = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n' +
+        '\n' +
+        'false:\n' +
+        'int d = 3;\n' +
+        '/* A comment. */\n' +
+        'double e = 4;\n'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignCompound',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether compound ' +
+        'assignments like `+=` are aligned along with `=`.',
+      codeSnippet:
+        'true:\n' +
+        'a   &= 2;\n' +
+        'bbb  = 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a &= 2;\n' +
+        'bbb = 2;'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionDeclarations',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'declarations are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned int f1(void);\n' +
+        'void         f2(void);\n' +
+        'size_t       f3(void);\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned int f1(void);\n' +
+        'void f2(void);\n' +
+        'size_t f3(void);'
+    },
+    {
+      type: typeof (bool),
+      title: 'AlignFunctionPointers',
+      desc: 'Only for `AlignConsecutiveDeclarations`. Whether function ' +
+        'pointers are aligned.',
+      codeSnippet:
+        'true:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int      (*f)();\n' +
+        '\n' +
+        'false:\n' +
+        'unsigned i;\n' +
+        'int     &r;\n' +
+        'int     *p;\n' +
+        'int (*f)();'
+    },
+    {
+      type: typeof (bool),
+      title: 'PadOperators',
+      desc: 'Only for `AlignConsecutiveAssignments`. Whether short ' +
+        'assignment operators are left-padded to the same length as long ' +
+        'ones in order to put all assignment operators to the right of the ' +
+        'left hand side.',
+      codeSnippet:
+        'true:\n' +
+        'a   >>= 2;\n' +
+        'bbb   = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;\n' +
+        '\n' +
+        'false:\n' +
+        'a >>= 2;\n' +
+        'bbb = 2;\n' +
+        '\n' +
+        'a     = 2;\n' +
+        'bbb >>= 2;'
+    }
+  ]
+}
+
+const RuleAlignTableGenDefinitionColons = {
+  version: 19,
+  type: null,
+  title: 'Align Consecutive Table Gen Breaking DAG Arg Colons',
+  desc: 'Style of aligning consecutive TableGen DAGArg operator colons. If ' +
+    'enabled, align the colon inside DAGArg which have line break inside.  ' +
+    'This works only when TableHenBreakInsideDAGArg is BreakElements or ' +
+    'BreakAll and the DAGArg is not excepted by ' +
+    'TableGenBreakingDAGArgOperators\'s effect.',
+  codeSnippet:
+    'def Def       : Parent {}\n' +
+    'def DefDef    : Parent {}\n' +
+    'def DefDefDef : Parent {}\n',
+  note: '',
+  subRules: [
+    {
+      title: 'Enabled',
+      desc: 'Whether aligning is enabled.',
+      codeSnippet:
+        '#define SHORT_NAME       42\n' +
+        '#define LONGER_NAME      0x007F\n' +
+        '#define EVEN_LONGER_NAME (2)\n' +
+        '#define foo(x)           (x * x)\n' +
+        '#define bar(y, z)        (y + z)\n' +
+        '\n' +
+        'int a            = 1;\n' +
+        'int somelongname = 2;\n' +
+        'double c         = 3;\n' +
+        '\n' +
+        'int aaaa : 1;\n' +
+        'int b    : 12;\n' +
+        'int ccc  : 8;\n' +
+        '\n' +
+        'int         aaaa = 12;\n' +
+        'float       b = 23;\n' +
+        'std::string ccc;',
+    },
+    {
+      type: typeof (bool),
+      title: 'AcrossEmptyLines',
+      desc: 'Whether to align across empty lines',
+      codeSnippet:
+        'true:\n' +
+        'int a            = 1\n' +
         'int somelongname = 2;\n' +
         'double c         = 3;\n' +
         '\n' +
