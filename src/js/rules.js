@@ -1222,6 +1222,177 @@ const RuleAlignEscapedNewlines = {
   ]
 }
 
+const RuleAlignOperands = {
+  version: 3.5,
+  title: 'Align Operands',
+  desc: 'If `true`, horizontally align operands of binary and ternary ' +
+    'expressions.',
+  options: [
+    {
+      title: 'OAS_DontAlign',
+      config: 'DontAlign',
+      desc: 'Do not align operands of binary and ternary expressions. The ' +
+        'wrapped lines are indented `ContinuationIndentWidth` spaces from ' +
+        'the start of the line.',
+      codeSnippet:
+        'int aaa = bbbbbbbbbbbbbbb +\n' +
+        '    ccccccccccccccc;'
+    },
+    {
+      title: 'OAS_Align',
+      config: 'Align',
+      desc: 'Horizontally align operands of binary and ternary ' +
+        'expressions.\n' +
+        'Specifically, this aligns operands of a single expression that ' +
+        'to be split over multiple lines. When ' +
+        '`BreakBeforeBinaryOperators` is set, the wrapped operator is ' +
+        'aligned with the operand on the first line.',
+      codeSnippet:
+        'int aaa = bbbbbbbbbbbbbbb +\n' +
+        '          ccccccccccccccc;\n' +
+        '/* Or with BreakBeforeBinaryOperators... */\n' +
+        'int aaa = bbbbbbbbbbbbbbb\n' +
+        '          + ccccccccccccccc;\n',
+    },
+    {
+      title: 'OAS_AlignAfterOperator',
+      config: 'AlignAfterOperator',
+      desc: 'This is similar to `OAS_Align`, except when ' +
+        '`BreakBeforeBinaryOperators` is set, the operator is un-indented ' +
+        'so that the wrapped operand is aligned with the operand on the ' +
+        'first line.',
+      codeSnippet:
+        'int aaa = bbbbbbbbbbbbbbb\n' +
+        '        + ccccccccccccccc;\n',
+    },
+  ]
+}
+
+const RuleAlignTrailingComments = {
+  version: 3.7,
+  title: 'Align Trailing Comments',
+  desc: 'Control of trailing comments.\n' +
+    'The alignment stops at closing braces after a line break, and only ' +
+    'followed by other closing braces, a (`do-`)`while`, a lambda call, or' +
+    'a semicolon.',
+  note: 'As of clang-format 16 this option is not a bool but can be set to ' +
+    'the options. Conventional bool options still can be parsed as before.',
+  subRules: [
+    {
+      title: 'TrailingCommentsAlignmentKinds',
+      config: 'Kind',
+      desc: 'Specifies the way to align trailing comments.',
+      options: [
+        {
+          title: 'TCAS_Leave',
+          config: 'Leave',
+          desc: 'Leave trailing comments as they are.',
+          codeSnippet:
+            'int a;    // comment\n' +
+            'int ab;       // comment\n' +
+            '\n' +
+            'int abc;  // comment\n' +
+            'int abcd;     // comment',
+        },
+        {
+          title: 'TCAS_Always',
+          config: 'Always',
+          desc: 'Align trailing comments.',
+          codeSnippet:
+            'int a;  // comment\n' +
+            'int ab; // comment\n' +
+            '\n' +
+            'int abc;  // comment\n' +
+            'int abcd; // comment',
+        },
+        {
+          title: 'TCAS_Never',
+          config: 'Never',
+          desc: 'Don\'t align trailing comments but other formatter applies.',
+          codeSnippet:
+            'int a; // comment\n' +
+            'int ab; // comment\n' +
+            '\n' +
+            'int abc; // comment\n' +
+            'int abcd; // comment',
+        },
+      ]
+    },
+    {
+      type: 'unsigned',
+      title: 'OverEmptyLines',
+      config: 'OverEmptyLines',
+      desc: 'How many empty lines to apply alignment to. When both ' +
+        '`MaxEmptyLinesToKeep` and `OverEmptyLines` are set to 2, it ' +
+        'formats like below.',
+      codeSnippet:
+        '/* When both MaxEmptyLinesToKeep and OverEmptyLines are set to 2,\n' +
+        '   it formats like below.*/\n' +
+        'int a;      // all of these\n' +
+        '\n' +
+        'int ab;     // comments are\n' +
+        '\n' +
+        '\n' +
+        'int abcdef; //aligned' +
+        '\n' +
+        '/* When MaxEmptyLinesToKeep is set to 2 and OverEmptyLines is ' +
+        '   set to 1, it formats like below.*/\n' +
+        'int a;  // these are\n' +
+        '\n' +
+        'int ab; // aligned\n' +
+        '\n' +
+        '\n' +
+        'int abcdef; // but this isn\'t',
+    },
+  ],
+}
+
+const RuleAllowAllArgumentsOnNextLine = {
+  version: 9,
+  type: 'bool',
+  title: 'Allow All Arguments On Next Line',
+  desc: 'If a function call or braced initializer list doesn\'t fit on a ' +
+    'line, allow putting all arguments onto the next line, even if ' +
+    '`BinPackArguments` is `false`.',
+  codeSnippet:
+    'true:\n' +
+    'callFunction(\n' +
+    '    a, b, c, d);\n' +
+    '\n' +
+    'false:\n' +
+    'callFunction(a,\n' +
+    '             b,\n' +
+    '             c,\n' +
+    '             d);\n'
+}
+
+const RuleAllowAllConstructorInitializersOnNextLine = {
+  version: 9,
+  type: null,
+  title: 'Allow All Constructor Initializers On Next Line',
+  desc: 'This option is deprecated. See `NextLine` of ' +
+    '`PackConstructorInitializers`.',
+}
+
+const RuleAllowAllParametersOfDeclarationOnNextLine = {
+  version: 3.3,
+  type: 'bool',
+  title: 'Allow All Arguments On Next Line',
+  desc: 'If a function call or braced initializer list doesn\'t fit on a ' +
+    'line, allow putting all arguments onto the next line, even if ' +
+    '`BinPackArguments` is `false`.',
+  codeSnippet:
+    'true:\n' +
+    'callFunction(\n' +
+    '    a, b, c, d);\n' +
+    '\n' +
+    'false:\n' +
+    'callFunction(a,\n' +
+    '             b,\n' +
+    '             c,\n' +
+    '             d);\n'
+}
+
 const Rule = {
   version: 0,
   type: null,
