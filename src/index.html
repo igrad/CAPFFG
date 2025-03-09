@@ -11,37 +11,49 @@
     <title>CAPFFG</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script defer src="js/parser.js"></script>
   </head>
 
   <body>
-    <div class="page" id="welcome">
-      <div class="centered">
-        <div class="vsplit">
-          <div id="text">
-            Welcome to the Clangd Auto-Parser and Format File 
-            Generator, or CAPFFG.
-            <br>
-            Simple mode will walk you through creating a new 
-            .clang-format file in a simplified way, combining 
-            similar settings into a step-by-step process suited 
-            for anyone new to Clangd formatting.
-            <br>
-            Advanced mode will give you an up-front list of all 
-            settings.
-            <br>
-            Parse allows you to paste in code to automatically 
-            divine the set of rules to apply. You can still alter 
-            all the same rules you normally can. Any rules that 
-            cannot be inferred will be flagged for manual review.
-          </div>
-          <div id="selector-div">
-            <div id="simple" class="mode-select">Simple</div>
-            <div id="advanced" class="mode-select">Advanced</div>
-            <div id="autoparse" class="mode-select">Auto-Parse</div>
-          </div>
+    <div class="vsplit" id="main-split">
+      <div class="centered" id="info-area">
+        <div id="text">
+          <h1>CAPFFG</h1>
+          Welcome to the Clangd Auto-Parser and Format File 
+          Generator.
+          <br>
+          <br>
+          Simple mode will walk you through creating a new 
+          .clang-format file in a simplified way, combining 
+          similar settings into a step-by-step process suited 
+          for anyone new to Clangd formatting.
+          <br>
+          <br>
+          Advanced mode will give you an up-front list of all 
+          settings.
+          <br>
+          <br>
+          Parse allows you to paste in code to automatically 
+          divine the set of rules to apply. You can still alter 
+          all the same rules you normally can. Any rules that 
+          cannot be inferred will be flagged for manual review.
+        </div>
+        <div id="selector-div">
+          <div id="simple" class="mode-select">Simple</div>
+          <div id="advanced" class="mode-select">Advanced</div>
+          <div id="autoparse" class="mode-select">Auto-Parse</div>
+        </div>
+      </div>
+      <div class="drag-split"></div>
+      <div class="code-editor">
+        <div class="code-header">
+          code header area
+        </div>
+        <div class="hr"></div>
+        <div class="code">
+          some code
         </div>
       </div>
     </div>

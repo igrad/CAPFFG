@@ -1,0 +1,69 @@
+body {
+	margin: 0px;
+	width: 100vw;
+	height: 100vh;
+	min-width: 500px;
+}
+
+.centered {
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.vsplit {
+	display: flex;
+}
+
+.drag-split {
+	width: 4px;
+	cursor: col-resize;
+	background-color: gray;
+	border-left: 2px solid #a9a9a900;
+	border-right: 2px solid #a9a9a900;
+	height: 100vh;
+}
+
+.text {
+
+}
+
+.mode-select {
+	white-space: nowrap;
+	padding: 0.7rem;
+	background-color: #285F74;
+	color: white;
+	margin: 8px;
+
+	font-weight: bold;
+	font-size: 1.2rem;
+	text-align: center;
+}
+
+.code-editor {
+	min-width: 40%;
+}
+
+.hr {
+	height: 1px;
+	background-color: gray;
+	width: 100%;
+}
+
+#main-split {
+	height: 100%;
+}
+
+#info-area {
+	max-width: 70%;
+	min-width: 175px;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	background-color: #ABD2E1;
+}
+
+#text {
+	padding-bottom: 2rem;
+}
